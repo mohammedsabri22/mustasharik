@@ -3,8 +3,7 @@ from django.shortcuts import render
 from django.http import JsonResponse,HttpRequest
 from django.views.decorators.csrf import csrf_exempt
 from openai import OpenAI
-from transformers import BertTokenizer, BertForSequenceClassification
-import torch
+
 import json
 import logging
 from PIL import Image 
@@ -120,47 +119,3 @@ def split_into_clauses(section):
         clauses.extend(line_clauses)
     
     return clauses
-
-@csrf_exempt
-def contract_2(request):
-    if request.method == 'POST':
-        contract_file = request.FILES.get('contract-file')
-        contract_type = request.POST.get('contract-type')
-        
-        if contract_file:
-            extracted_text = extract_text(contract_file)  # Extract text
-            terms_section = extract_terms_and_conditions(extracted_text)  # Extract Terms and Conditions
-            
-            if terms_section:
-                clauses = split_into_clauses(terms_section)  # Split into clauses
-                classification_results = classify_clauses(clauses)  # Classify clauses
-                return JsonResponse({'clauses': classification_results, 'contract_type': contract_type})
-            else:
-                return JsonResponse({'error': 'Terms and Conditions section not found'}, status=400)
-        else:
-            return JsonResponse({'error': 'No file uploaded'}, status=400)
-
-    return render(request, 'app/contract.html')
-
-def classify_clauses(clauses):
-    # Load the fine-tuned ARBERT model and tokenizer
-    model = BertForSequenceClassification.from_pretrained("fine_tuned_arbert_model")
-    tokenizer = BertTokenizer.from_pretrained("fine_tuned_arbert_model")
-
-    # Tokenize the clauses
-    new_inputs = tokenizer(clauses, return_tensors="pt", padding=True, truncation=True, max_length=512)
-
-    # Make predictions
-    model.eval()
-    with torch.no_grad():
-        outputs = model(**new_inputs)
-        predictions = torch.argmax(outputs.logits, dim=-1)
-
-    # Map predictions to labels
-    labels = ["clear", "ambiguous"]
-    results = []
-    for i, clause in enumerate(clauses):
-        predicted_label = labels[predictions[i]]
-        results.append({"clause": clause, "predicted_label": predicted_label})
-    
-    return results
