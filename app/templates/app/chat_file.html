@@ -1,0 +1,73 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="chat-page d-flex">
+        <div class="p-2 bd-highlight"></div>
+
+        <div class="chat2 flex-grow-1 d-flex flex-column m-3">
+            <!-- Chat Container -->
+            <div id="chat-container" class="chat-container p-3 flex-grow-1 text-black-50 bd-highlight">
+                كيف يمكن ان اساعدك
+            </div>
+
+            <!-- Chat Input Form -->
+            <form id="chat-form" method="post">
+                {% csrf_token %}
+                <div class="chat-input d-flex my-3">
+
+
+                    <input type="text" id="chat-input" name="message" class="flex-grow-1" placeholder="اكتب استفسارك هنا ...">
+                    <button type="submit" class="ms-2 text-center"><i class="fa fa-paper-plane"></i></button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+    {% block scripts %}
+<script>
+    document.getElementById('chat-form').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent the form from submitting and reloading the page
+
+        const userInput = document.getElementById('chat-input').value;
+
+        if (userInput.trim() === "") {
+            alert("Please enter a message.");
+            return;
+        }
+
+        // Add user's message to the chat container
+        const chatContainer = document.getElementById('chat-container');
+        chatContainer.innerHTML += `<div class="user-message">${userInput}</div>`;
+
+        // Clear the input field
+        document.getElementById('chat-input').value = "";
+
+        // Send AJAX request to the server
+        fetch("{% url 'chat-with-gpt' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token
+            },
+            body: `message=${encodeURIComponent(userInput)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.response) {
+                // Add GPT's response to the chat container
+                chatContainer.innerHTML += `<div class="gpt-response">${data.response}</div>`;
+            } else {
+                alert('Error: Unable to get a response from GPT.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+    {% endblock %}

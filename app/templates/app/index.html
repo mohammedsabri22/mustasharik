@@ -1,0 +1,57 @@
+{% extends "app/layout.html" %}
+    {% load static %}
+{% block content %}
+<!-- landing section -->
+<div class="landing d-flex justify-content-center align-items-center mb-4">
+
+    <div class="text-center  mt-4">
+
+        <img src="{% static 'imgs/logo.jpeg' %}" class="img-fluid main-img" alt="">
+        <h1 class="landing-header"> مستشارك   </h1>
+        <p class="text-black-50 landing-description mt-3 mb-4">
+            وجهتك الاولى لاستشارة امنة
+        </p>
+        <a class="btn rounded-pill main-btn" href="#"> ابدأ لان</a>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="about mt-5 mb-5">
+    <div class="container mb-5">
+        <div class="main-title text-center mb-5 mt-2 position-relative">
+
+            <h2 class="mb-5"> عن المنصة</h2>
+
+        </div>
+
+        <div class="row align-items-center mt-5">
+            <div class="col-lg-5 mb-4 text-center text-md-start">
+                <div class="text">
+                    <h4 class="mb-3"> مستشارك</h4>
+                    <p class="text-black-50 fs-6 px-2">منصة قانونية تتيح لك فحص العقود والتاكد من البنود الغامضة  </p>
+                    <p class="text-black-50 fs-6 px-2">منصة قانونية تتيح لك فحص العقود والتاكد من البنود الغامضة </p>
+
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="image ms-md-5 text-center ">
+                    <img src="{% static 'imgs/about.png' %}" alt="" class="img-fluid">
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

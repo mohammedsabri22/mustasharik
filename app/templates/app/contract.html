@@ -1,0 +1,76 @@
+{% extends "app/layout.html" %}
+    {% load static %}
+{% block content %}
+
+
+
+<div class="container contract-page mt-5">
+    <div class="row">
+        <div class="col-md-5 p-2  bd-highlight">
+            <form id="contract-form" method="post" action="{% url 'contract' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-5">
+                    <label for="contract-type" class="form-label"> اداة التحقق </label>
+                    <select class="form-select form-select-lg mb-3" id="contract-type" name="contract-type" aria-label=".form-select-lg example">
+                        <option value="ambiguous contract" selected>البنود الغامضة</option>
+                        <option value="Contradictory contract">البنود المتناقضة</option>
+                    </select>
+                </div>
+
+                <div class="mb-5">
+                    <label for="contract-type" class="form-label"> ملف الوثيقة  </label>
+                    <input class="form-control form-control-lg" id="contractFile" name="contract-file" type="file" placeholder="قم باختيار ">
+                </div>
+
+                <div class="mb-3">
+
+                    <button type="submit" class="btn btn-md btn-primary main-btn">مراجعة</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-7 d-flex flex-column my-2 px-2">
+            <h5 class="ms-md-5"> نتيجةالمراجعة</h5>
+            <div class="results-container   p-3 ms-md-5 flex-grow-1 text-black-50 bd-highlight"> </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+
+{% block scripts %}
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<script>
+    $(document).ready(function () {
+        $('#contract-form').on('submit', function (e) {
+            e.preventDefault();  // Prevent the default form submission
+
+            var formData = new FormData(this);  // Create a FormData object
+
+            $.ajax({
+                url: "{% url 'contract' %}",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.error) {
+                        alert(response.error);  // Display error message
+                    } else {
+                        // Display the extracted text in the results container
+                        $('.results-container').text(response.extracted_text);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred: " + error);  // Display AJAX error
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
