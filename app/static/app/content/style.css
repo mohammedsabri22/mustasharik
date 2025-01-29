@@ -1,0 +1,146 @@
+body {
+    font-family: 'Cairo', sans-serif;
+    margin: 0;
+    padding: 0;
+    /* overflow-x: hidden;  */
+}
+/* navbar  */
+.navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: white;
+}
+.navbar .logo-mini {
+    width: 70px;
+    height: 60px;
+}
+.nav-link:hover {
+border-bottom:2px #8A8363 solid ;
+}
+.nav-link.active {
+    color: #8A8363 ;
+    font-weight: 500;
+    }
+.border-bottom {
+    border-color:#8A8363 ;
+}
+
+/* landing page */
+.landing {
+    min-height: calc(100vh - 72px);
+   
+}
+.landing h1 {
+    color: #052c4b;
+    line-height: 2;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.landing .landing-description {
+    color: #00161ec2;
+    font-size: 1.7rem;
+    line-height: 2.5;
+    font-weight: 600;
+ 
+}
+.landing .main-img {
+    height: 150px;
+    width: 100%;
+}
+.landing .main-btn {
+    background-color:#8A8363;
+    color: white;
+    font-weight: 600;
+    display: inline-block;
+    width: 200px;
+ 
+    padding: .35rem .5rem;
+}
+
+
+
+/* about  */
+
+.about .image {
+    height: 330px;
+    width: 100%;
+}
+.about .image img{
+   height: inherit;
+   width: 100%;
+}
+
+/* contarct  */
+.main-btn {
+    background-color:#8A8363;
+    color: white;
+    font-weight: 600;
+    display: inline-block;
+    width: 100%;
+ 
+    padding: .35rem .5rem;  
+    border: 1px #797874  solid;
+}
+.contract-page {
+    height:100vh;
+}
+.results-container {
+    border: 1px #eee solid;
+    border-radius: 10px;
+    min-height:300px
+}
+
+.chat2 {
+    height: 80vh;
+}
+
+
+.chat-container {
+    border: 1px #eee solid;
+    border-radius: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px #f1f1f1 solid;
+    outline: none;
+    border-radius: 10px;
+}
+
+.chat-input button {
+    padding: 0; /* Remove padding to ensure the icon is centered */
+    background-color: #8A8363;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; /* Use Flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.chat-input button:hover {
+    background-color: #0056b3;
+}
+.user-message {
+    text-align: left;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    max-width: 70%;
+    margin-left: auto;
+}
+
+.gpt-response {
+    text-align: right;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #e2f0ff;
+    border-radius: 10px;
+    max-width: 70%;
+    margin-right: auto;
+}
